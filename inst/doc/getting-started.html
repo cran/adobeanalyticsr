@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting Started</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting Started</h1>
+
+
+
+<p>This vignette goes through the basics of getting started with <code>adobeanalyticsr</code>.</p>
+<div id="basic-setup" class="section level2">
+<h2>Basic Setup</h2>
+<p>The basic setup is documented on the home page of <a href="https://adobeanalyticsr.com">adobeanalyticsr.com</a>, which reviews the details for:</p>
+<ul>
+<li>Creating an Adobe Console API project through <a href="https://console.adobe.io/integrations" class="uri">https://console.adobe.io/integrations</a> (this is available with all Adobe Analytics accounts, but requires the appropriate level of admin access to set up the project)</li>
+<li>Adding <code>AW_CLIENT_ID</code> and <code>AW_CLIENT_SECRET</code> environment variables (the recommended mechanism for this is through the <code>.Renviron</code> file). If these environment variables are not available, then the <code>client_id</code> and <code>client_secret</code> arguments in <code>aw_token()</code> need to be populated with the client ID and secret.</li>
+<li>Adding <code>AW_COMPANY_ID</code> and <code>AW_REPORTSUITE_ID</code> environment variables (again, this is recommended to be done via a <code>.Renviron</code> file).</li>
+</ul>
+</div>
+<div id="understanding-aw_company_id-and-aw_reportsuite_id" class="section level2">
+<h2>Understanding AW_COMPANY_ID and AW_REPORTSUITE_ID</h2>
+<p>Many <code>adobeanalyticsr</code> functions require a company ID (the Adobe account being accessed) and a report suite ID (the specific report suite to pull data or information from) to run. As such, these are arguments (<code>company_id</code> and <code>rsid</code>) within those functions that default to the values for the <code>AW_COMPANY_ID</code> and <code>AW_REPORTSUITE_ID</code> environment variables.</p>
+<p>This approach has some important ramifications:</p>
+<ul>
+<li>If you primarily access a single company and/or a single report suite, then creating <code>AW_COMPANY_ID</code> and <code>AW_REPORTSUITE_ID</code> environment variables means you will <em>not</em> have to set them on every function call, which can make for shorter and cleaner code.</li>
+<li>If you periodically (or often) need to use a different <code>company_id</code> or <code>rsid</code> from what is specified as an environment variable, all you need to do is call them explicitly within the function calls. The values you specify for either of these (or both of them) directly in a function call will take precedence over any environment variables that are set up (this is core R behavior: function arguments often have default values built into them, but any value specified in the code will be used in place of those defaults; this is not anything unique to <code>adobeanalyticsr</code>).<br />
+</li>
+<li>If you do <em>not</em> have <code>AW_COMPANY_ID</code> and <code>AW_REPORTSUITE_ID</code> environment variables created <em>and</em> you do not specify values for them in the <code>adobeanalyticsr</code> function calls, then the functions will fail.</li>
+</ul>
+<p>In this vignette, both <code>AW_COMPANY_ID</code> and <code>AW_REPORTSUITE_ID</code> environment variables have been set up (but not shown).</p>
+</div>
+<div id="load-the-package-and-authenticate" class="section level2">
+<h2>Load the Package and Authenticate</h2>
+<p>Once the package is loaded, authenticate with <code>aw_token()</code>. If you have not authenticated ever, or if you have not authenticated within the last 24 hours, then a browser should open requiring you to log in to your Adobe account, and it will then redirect you to a web page that displays a lengthy token that you can copy and paste back into an <strong>Enter your authorization code:</strong> prompt in the R console.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(dplyr)            <span class="co"># Light cleanup of output</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(knitr)            <span class="co"># Cleaner data tables</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(adobeanalyticsr)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">aw_token</span>()</span></code></pre></div>
+<p>The token will look something like this (with different letters and numbers and characters):</p>
+<pre><code>eyJ4NXUiOiJpbXNfbmExLWtleS0xLmNlciIsImFsZyI6IlJTMjU2In0.eyJpZCI6IjE2MTI3MTEyMjM5MzNfNGE2ZmVlM2-tYzdkOS00M2QyLWI5ODUtYzAzMDk2NDA2MGFjX3VlMSIsImNsaWVudF9pZCI6IjA2MTU0ZDgzMjl-OTQxZjViMGUzM2EwZGM2M2U3NmQxIiwidXNlcl9pZCI6IkY2MUJBOTU0NUE3QjMyM0QwQTQ5NUQ2Q0BBZG9iZUlEI-wic3RhdGUiOiIiLCJKeXBlIjoiYXV0aG9yaXphdGlvbl9jb2RlIiwiYXMiOiJpbXMtbmExIiwiZmciO-JWRlFSUkhCTVhMTzU2SDRDRTZSTFJZZUE0TT09PT09PSIsInNpZCI6IjE2MTI3MTEyMjM5MzNfMWE2ZDc4ZTUtNT-zZi00OWFkLWFmZTktYTk0MTJkZmYwMzA0X3VlMSIsIm90byI3InRydWUiLCJleHBpcmVzX2luIjoiMT-wMDAwMCIsImNyZWF0ZWRfYXQiOiIxNjEyNzExMjIzOTMzIiwic2NvcGUiOiJvcGVuaWQsQWRvYmVJRCxyZWFkX-9yZ2FuaXphdGlvbnMsYWRkaXRpb25hbF9pbmZvLnByb2plY3RlZFByb2R1Y3RDb250ZXh0LGFkZGl0aW9uY-xfaW5mby5qb2JfZnVuY3Rpb24ifQ.EvoihD7IPXkew_yFQuzjZGfiU_Q8-vlUkmytwfB_Y46DKePINPn7URq8bit0dXoO-tUdMUKVNOHEBbqww6ydDGBPHSCbOH1GgNsILoN96tjHTtA-jDxN8jrAnQ0PuCssA-GePnqryxCxOH9WyZIl2fog00ib8iZ3ZFAJLDrvthWwWHUw-ivu-K-F3UAtU7A4ma_7pe07D1rW5MhTcZOSr0pri68bjFA86cJqH5DHyMdp4F2d7QgZcYPMdrvVfXTwWXv9s5r6huvDcqv6nny-WOKZbKmoP6zwMzn5xa343wrQ5oXFbRxYem-tC154_dc7ekrC8YUX0pY5up9a-OUy0w</code></pre>
+<p>Confirm that the authorization worked by running <code>get_me()</code>, which will return two things if the authorization was successful:</p>
+<ol style="list-style-type: decimal">
+<li>A message: <code>Your data is now available!</code></li>
+<li>A data frame showing the company ID (<code>globalCompanyId</code>) and company name (<code>companyName</code>) for all of the companies (accounts) to which you have access based on the login you used when you called <code>aw_token()</code>.</li>
+</ol>
+</div>
+<div id="get-available-dimensions-metrics-and-segments" class="section level2">
+<h2>Get Available Dimensions, Metrics, and Segments</h2>
+<p>Because the Adobe Analytics API works with the variable and segment <em>IDs</em> rather than the plain English names of dimensions, metrics, and segments, it is often useful, at least in the initial development of a project, to create data frames that contain all of the available values for these three types of variables.</p>
+<div id="get-available-dimensions" class="section level3">
+<h3>Get Available Dimensions</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>dims_df &lt;-<span class="st"> </span><span class="kw">aw_get_dimensions</span>()</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; Auto-refreshing stale OAuth token.</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#&gt; Warning: Unable to refresh token: unauthorized_client</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt; Request failed [401]. Retrying in 1 seconds...</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; Auto-refreshing stale OAuth token.</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#&gt; Warning: Unable to refresh token: unauthorized_client</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co">#&gt; Request failed [401]. Retrying in 1 seconds...</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co">#&gt; Auto-refreshing stale OAuth token.</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co">#&gt; Warning: Unable to refresh token: unauthorized_client</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#&gt; Error in aw_call_api(req_path = urlstructure, debug = debug, company_id = company_id): Unauthorized (HTTP 401).</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="kw">head</span>(dims_df, <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id, name, type, category) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">type</th>
+<th align="left">category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">averagepagetime</td>
+<td align="left">Time Spent on Page - Bucketed</td>
+<td align="left">ordered-enum</td>
+<td align="left">Metrics</td>
+</tr>
+<tr class="even">
+<td align="left">browser</td>
+<td align="left">Browser</td>
+<td align="left">string</td>
+<td align="left">Audience</td>
+</tr>
+<tr class="odd">
+<td align="left">browserheight</td>
+<td align="left">Browser Height - Granular</td>
+<td align="left">int</td>
+<td align="left">Audience</td>
+</tr>
+<tr class="even">
+<td align="left">browserheightbucketed</td>
+<td align="left">Browser Height - Bucketed</td>
+<td align="left">ordered-enum</td>
+<td align="left">Audience</td>
+</tr>
+<tr class="odd">
+<td align="left">browsertype</td>
+<td align="left">Browser Type</td>
+<td align="left">enum</td>
+<td align="left">Audience</td>
+</tr>
+<tr class="even">
+<td align="left">browserwidth</td>
+<td align="left">Browser Width - Granular</td>
+<td align="left">int</td>
+<td align="left">Audience</td>
+</tr>
+<tr class="odd">
+<td align="left">browserwidthbucketed</td>
+<td align="left">Browser Width - Bucketed</td>
+<td align="left">ordered-enum</td>
+<td align="left">Audience</td>
+</tr>
+<tr class="even">
+<td align="left">campaign</td>
+<td align="left">Tracking Code</td>
+<td align="left">string</td>
+<td align="left">Traffic Sources</td>
+</tr>
+<tr class="odd">
+<td align="left">campaign.1</td>
+<td align="left">Campaign Source</td>
+<td align="left">string</td>
+<td align="left">Traffic Sources</td>
+</tr>
+<tr class="even">
+<td align="left">campaign.2</td>
+<td align="left">Campaign Medium</td>
+<td align="left">string</td>
+<td align="left">Traffic Sources</td>
+</tr>
+</tbody>
+</table>
+<p>This data frame includes:</p>
+<ul>
+<li>Standard, out-of-the-box dimensions</li>
+<li>Custom dimensions (eVars and s.props)</li>
+<li><em>Classifications</em> of dimensions: these are identifiable because their <code>id</code> values are <code>[classified variable].[num]</code> and they have a non-<code>NA</code> value for <code>parent</code> (the <code>parent</code> column–not shown above–has the name of the classified variable)</li>
+</ul>
+<p>The data frame can then be searched and filtered for specific dimensions for use in subsequent data calls.</p>
+</div>
+<div id="get-available-metrics" class="section level3">
+<h3>Get Available Metrics</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>metrics_df &lt;-<span class="st"> </span><span class="kw">aw_get_metrics</span>()</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="kw">head</span>(metrics_df, <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id, name, type, category) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">type</th>
+<th align="left">category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">averagepagedepth</td>
+<td align="left">Average Page Depth</td>
+<td align="left">int</td>
+<td align="left">Traffic</td>
+</tr>
+<tr class="even">
+<td align="left">averagetimespentonpage</td>
+<td align="left">Average Time Spent on Page (seconds)</td>
+<td align="left">int</td>
+<td align="left">Traffic</td>
+</tr>
+<tr class="odd">
+<td align="left">averagetimespentonsite</td>
+<td align="left">Average Time Spent on Site (seconds)</td>
+<td align="left">int</td>
+<td align="left">Traffic</td>
+</tr>
+<tr class="even">
+<td align="left">averagevisitdepth</td>
+<td align="left">Average Visit Depth</td>
+<td align="left">int</td>
+<td align="left">Traffic</td>
+</tr>
+<tr class="odd">
+<td align="left">bouncerate</td>
+<td align="left">Bounce Rate</td>
+<td align="left">percent</td>
+<td align="left">Traffic</td>
+</tr>
+<tr class="even">
+<td align="left">bounces</td>
+<td align="left">Bounces</td>
+<td align="left">int</td>
+<td align="left">Traffic</td>
+</tr>
+<tr class="odd">
+<td align="left">campaigninstances</td>
+<td align="left">Campaign Click-throughs</td>
+<td align="left">int</td>
+<td align="left">Traffic Sources</td>
+</tr>
+<tr class="even">
+<td align="left">cartadditions</td>
+<td align="left">Cart Additions</td>
+<td align="left">int</td>
+<td align="left">Conversion</td>
+</tr>
+<tr class="odd">
+<td align="left">cartremovals</td>
+<td align="left">Cart Removals</td>
+<td align="left">int</td>
+<td align="left">Conversion</td>
+</tr>
+<tr class="even">
+<td align="left">carts</td>
+<td align="left">Carts</td>
+<td align="left">int</td>
+<td align="left">Conversion</td>
+</tr>
+</tbody>
+</table>
+<p>This data frame includes:</p>
+<ul>
+<li>Standard, out-of-the-box metrics</li>
+<li>Custom metrics (events)</li>
+</ul>
+<p><code>aw_get_metrics()</code> does <em>not</em> return <em>calculated metrics</em>, so those require a separate function call.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>calc_metrics_df &lt;-<span class="st"> </span><span class="kw">aw_get_calculatedmetrics</span>()</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">head</span>(calc_metrics_df, <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(id, name, type) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">cm300003965_557fc577e4b07e827d177ad0</td>
+<td align="left">Crash Rate (Mobile)</td>
+<td align="left">percent</td>
+</tr>
+<tr class="even">
+<td align="left">cm300003965_557fc577e4b07e827d177ad3</td>
+<td align="left">Average Session Length (Mobile)</td>
+<td align="left">time</td>
+</tr>
+<tr class="odd">
+<td align="left">cm300003965_557fc578e4b0094eea4f5201</td>
+<td align="left">Single Access (Calculated)</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="even">
+<td align="left">cm300003965_557fc578e4b0094eea4f5204</td>
+<td align="left">Crash Rate (Mobile)</td>
+<td align="left">percent</td>
+</tr>
+<tr class="odd">
+<td align="left">cm300003965_557fc578e4b0416196926008</td>
+<td align="left">Average Session Length (Mobile)</td>
+<td align="left">time</td>
+</tr>
+<tr class="even">
+<td align="left">cm300003965_557fc656e4b0adadba08f337</td>
+<td align="left">Avg. Order Value</td>
+<td align="left">currency</td>
+</tr>
+<tr class="odd">
+<td align="left">cm300003965_557fc656e4b0094eea4f58b6</td>
+<td align="left">Average Order Value</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="even">
+<td align="left">cm300003965_557fc656e4b0094eea4f58b8</td>
+<td align="left">Bounce Rate</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="odd">
+<td align="left">cm300003965_557fc790e4b0094eea4f6222</td>
+<td align="left">Crash Rate (Mobile)</td>
+<td align="left">percent</td>
+</tr>
+<tr class="even">
+<td align="left">cm300003965_557fc790e4b0416196926fac</td>
+<td align="left">Average Session Length (Mobile)</td>
+<td align="left">time</td>
+</tr>
+</tbody>
+</table>
+<p>Calculated metric IDs start with <code>cm</code> and are assigned by Adobe when the calculated metric is created.</p>
+<p>These two metrics data frames can be searched and filtered for specific metrics for use in subsequent data calls.</p>
+</div>
+<div id="get-available-segments" class="section level3">
+<h3>Get Available Segments</h3>
+<p>The default limit for the number of segments returned by the <code>aw_get_segments()</code> function is 10, so, depending on the number of segments you have, the limit value can be increased to return a complete list of segments.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>segments_df &lt;-<span class="st"> </span><span class="kw">aw_get_segments</span>(<span class="dt">limit =</span> <span class="dv">1000</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="kw">names</span>(segments_df)</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">#&gt; [1] &quot;name&quot;        &quot;description&quot; &quot;id&quot;          &quot;owner&quot;       &quot;migratedIds&quot; &quot;rsid&quot;</span></span></code></pre></div>
+<p>Similar to the dimensions and metrics, <code>aw_get_segments()</code> returns a data frame of available segments that can be searched and filtered to identify the specific <code>id</code> values to use in subsequent data calls.</p>
+</div>
+</div>
+<div id="freeform-table-data-pull" class="section level2">
+<h2>Freeform Table Data Pull</h2>
+<p>Just as in Analysis Workspace, the freeform table is the workhorse of <code>adobeanalyticsr</code>, and, as such, is the focus of the rest of this vignette.</p>
+<div id="single-dimension-single-metric" class="section level3">
+<h3>Single Dimension, Single Metric</h3>
+<p>The following is a breakdown of visits by device category for the last 30 full days for the report suite that is specified in the <code>AW_REPORTSUITE_ID</code> environment variable.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Specify a start date and end date. These can be specified as Date</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="co"># objects or as string objects in YYYY-MM-DD format.</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>start_date &lt;-<span class="st"> </span><span class="kw">Sys.Date</span>() <span class="op">-</span><span class="st"> </span><span class="dv">30</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>end_date &lt;-<span class="st"> </span><span class="kw">Sys.Date</span>() <span class="op">-</span><span class="st"> </span><span class="dv">1</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb7-7"><a href="#cb7-7"></a>                        <span class="dt">dimensions =</span> <span class="st">&quot;mobiledevicetype&quot;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="co">#&gt; A total of 3 rows have been pulled.</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># Output the results as a formatted table</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mobiledevicetype</th>
+<th align="right">visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">5546</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile Phone</td>
+<td align="right">1509</td>
+</tr>
+<tr class="odd">
+<td align="left">Tablet</td>
+<td align="right">28</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the <code>top</code> argument for <code>aw_freeform_table()</code> defaults to <code>5</code>, so only the top 5 values will be shown unless that argument is passed a higher value.</p>
+</div>
+<div id="single-dimension-multiple-metrics" class="section level3">
+<h3>Single Dimension, Multiple Metrics</h3>
+<p>Getting multiple metrics is simply a matter of passing a vector to the <code>metrics</code> argument rather than a single string:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb8-2"><a href="#cb8-2"></a>                        <span class="dt">dimensions =</span> <span class="st">&quot;mobiledevicetype&quot;</span>,</span>
+<span id="cb8-3"><a href="#cb8-3"></a>                        <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">&quot;visits&quot;</span>, <span class="st">&quot;pageviews&quot;</span>, <span class="st">&quot;visitors&quot;</span>))</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co">#&gt; A total of 3 rows have been pulled.</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># Output the results as a formatted table</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mobiledevicetype</th>
+<th align="right">visits</th>
+<th align="right">pageviews</th>
+<th align="right">visitors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">5546</td>
+<td align="right">10055</td>
+<td align="right">3829</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile Phone</td>
+<td align="right">1509</td>
+<td align="right">2414</td>
+<td align="right">1216</td>
+</tr>
+<tr class="odd">
+<td align="left">Tablet</td>
+<td align="right">28</td>
+<td align="right">95</td>
+<td align="right">23</td>
+</tr>
+</tbody>
+</table>
+<p>The example above used standard metrics, but custom metrics (e.g., “event10”) and calculated metrics (e.g., “cm300003965_557fc578e4b0094efa4f5204”) can also be included in the vector of metrics as needed.</p>
+<p>The default for the function is to return the API field names, but the “pretty names” can be returned instead by setting the <code>prettynames</code> argument to <code>TRUE</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb9-2"><a href="#cb9-2"></a>                        <span class="dt">dimensions =</span> <span class="st">&quot;mobiledevicetype&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3"></a>                        <span class="dt">metrics =</span> <span class="kw">c</span>(<span class="st">&quot;visits&quot;</span>, <span class="st">&quot;pageviews&quot;</span>, <span class="st">&quot;visitors&quot;</span>),</span>
+<span id="cb9-4"><a href="#cb9-4"></a>                        <span class="dt">prettynames =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; A total of 3 rows have been pulled.</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># Output the results as a formatted table</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Mobile Device Type</th>
+<th align="right">Visits</th>
+<th align="right">Page Views</th>
+<th align="right">Unique Visitors</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Other</td>
+<td align="right">5546</td>
+<td align="right">10055</td>
+<td align="right">3829</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile Phone</td>
+<td align="right">1509</td>
+<td align="right">2414</td>
+<td align="right">1216</td>
+</tr>
+<tr class="odd">
+<td align="left">Tablet</td>
+<td align="right">28</td>
+<td align="right">95</td>
+<td align="right">23</td>
+</tr>
+</tbody>
+</table>
+<p>While the pretty names are, indeed, “prettier,” they can add downstream complexity to the code. And, since custom metrics and calculated metrics can have their names changed at any point, if subsequent code references columns using these pretty names, the code is subject to break in the future if the metric(s) it references gets renamed. So, it is generally considered a best practice to work with the API field names (<code>prettynames = FALSE</code>) and then only convert to more readable names at the point of the data being presented to the end user.</p>
+</div>
+<div id="trending-metrics-over-time" class="section level3">
+<h3>Trending Metrics Over Time</h3>
+<p>What is time? This could be a deeply philosophical question, but, instead, we’ll treat it as a pragmatic one: time is a dimension. It’s just a dimension that gets some special treatment in this package.</p>
+<p>The first thing to note is that the <code>id</code> values for time values are all prepended with <code>daterange</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>dims_df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="kw">grepl</span>(<span class="st">&quot;^daterange.*&quot;</span>, id)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">select</span>(id, name) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">daterangeday</td>
+<td align="left">Day</td>
+</tr>
+<tr class="even">
+<td align="left">daterangehour</td>
+<td align="left">Hour</td>
+</tr>
+<tr class="odd">
+<td align="left">daterangeminute</td>
+<td align="left">Minute</td>
+</tr>
+<tr class="even">
+<td align="left">daterangemonth</td>
+<td align="left">Month</td>
+</tr>
+<tr class="odd">
+<td align="left">daterangequarter</td>
+<td align="left">Quarter</td>
+</tr>
+<tr class="even">
+<td align="left">daterangeweek</td>
+<td align="left">Week</td>
+</tr>
+<tr class="odd">
+<td align="left">daterangeyear</td>
+<td align="left">Year</td>
+</tr>
+</tbody>
+</table>
+<p>To get trended data for one or more metrics, simply use the appropriate date dimension as a dimension. The first “special” thing that happens here is that you don’t need to worry about setting the <code>top</code> argument to include all of the values. The package will assume that you want to include all of the date values in the range and will do this automatically.</p>
+<p>What will <em>not</em> (yet) be done automatically is for the package to return the results ordered by the date value (it will sort them by the first metric or whatever is specified in the <code>metricSort</code> argument), so we’ll need to do that sorting with the results:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb11-2"><a href="#cb11-2"></a>                        <span class="dt">dimensions =</span> <span class="st">&quot;daterangeday&quot;</span>,</span>
+<span id="cb11-3"><a href="#cb11-3"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">  </span><span class="kw">arrange</span>(daterangeday)</span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; A total of 30 rows have been pulled.</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co"># Output the results as a formatted table</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a>df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">daterangeday</th>
+<th align="right">visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2021-01-23</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-24</td>
+<td align="right">67</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-25</td>
+<td align="right">268</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-26</td>
+<td align="right">359</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-27</td>
+<td align="right">331</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-28</td>
+<td align="right">291</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-29</td>
+<td align="right">257</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-30</td>
+<td align="right">81</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-31</td>
+<td align="right">99</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-01</td>
+<td align="right">286</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-02</td>
+<td align="right">336</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-03</td>
+<td align="right">396</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-04</td>
+<td align="right">334</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-05</td>
+<td align="right">329</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-06</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-07</td>
+<td align="right">119</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-08</td>
+<td align="right">372</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-09</td>
+<td align="right">557</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-10</td>
+<td align="right">352</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-11</td>
+<td align="right">337</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-12</td>
+<td align="right">244</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-13</td>
+<td align="right">85</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-14</td>
+<td align="right">106</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-15</td>
+<td align="right">193</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-16</td>
+<td align="right">260</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-17</td>
+<td align="right">214</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-18</td>
+<td align="right">307</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-19</td>
+<td align="right">207</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-02-20</td>
+<td align="right">65</td>
+</tr>
+<tr class="even">
+<td align="left">2021-02-21</td>
+<td align="right">84</td>
+</tr>
+</tbody>
+</table>
+<p>To include a non-date dimension and specify a <code>top</code> value for that dimension while also returning all of the date values, use <code>0</code> in the position of the date dimension when specifying the <code>top</code> argument.</p>
+<p>The following code breaks down each day by <strong>Mobile Device Type</strong>, but only includes the top 2 values for each breakdown:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb12-2"><a href="#cb12-2"></a>                        <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">&quot;daterangeday&quot;</span>, <span class="st">&quot;mobiledevicetype&quot;</span>),</span>
+<span id="cb12-3"><a href="#cb12-3"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>                        <span class="dt">top =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">2</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="st">  </span><span class="kw">arrange</span>(daterangeday)</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co">#&gt; Estimated runtime: 24.8sec./0.41min.</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co">#&gt; 1 of 31 possible data requests complete. Starting the next 30 requests.</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; Request failed [429]. Retrying in 6 seconds...</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt; A total of 60 rows have been pulled.</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co"># Output the first few rows as a formatted table</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="kw">head</span>(df, <span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">daterangeday</th>
+<th align="left">mobiledevicetype</th>
+<th align="right">visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2021-01-23</td>
+<td align="left">Other</td>
+<td align="right">38</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-23</td>
+<td align="left">Mobile Phone</td>
+<td align="right">28</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-24</td>
+<td align="left">Other</td>
+<td align="right">41</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-24</td>
+<td align="left">Mobile Phone</td>
+<td align="right">25</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-25</td>
+<td align="left">Other</td>
+<td align="right">236</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-25</td>
+<td align="left">Mobile Phone</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-26</td>
+<td align="left">Other</td>
+<td align="right">280</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-26</td>
+<td align="left">Mobile Phone</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="left">2021-01-27</td>
+<td align="left">Other</td>
+<td align="right">266</td>
+</tr>
+<tr class="even">
+<td align="left">2021-01-27</td>
+<td align="left">Mobile Phone</td>
+<td align="right">62</td>
+</tr>
+</tbody>
+</table>
+<p>If the <code>daterange...</code> dimension is not the first dimension (and, for speed reasons, it may make sense to not have it there, as is discussed in the next section), the <code>0</code> can simply be re-located:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb13-2"><a href="#cb13-2"></a>                        <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">&quot;mobiledevicetype&quot;</span>, <span class="st">&quot;daterangeday&quot;</span>),</span>
+<span id="cb13-3"><a href="#cb13-3"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4"></a>                        <span class="dt">top =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="st">  </span><span class="kw">arrange</span>(mobiledevicetype, daterangeday)</span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; Estimated runtime: 2.4sec./0.04min.</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="co">#&gt; 1 of 3 possible data requests complete. Starting the next 2 requests.</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; A total of 60 rows have been pulled.</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># Output the first few rows as a formatted table</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="kw">head</span>(df) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">kable</span>()</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">mobiledevicetype</th>
+<th align="left">daterangeday</th>
+<th align="right">visits</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Mobile Phone</td>
+<td align="left">2021-01-23</td>
+<td align="right">28</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile Phone</td>
+<td align="left">2021-01-24</td>
+<td align="right">25</td>
+</tr>
+<tr class="odd">
+<td align="left">Mobile Phone</td>
+<td align="left">2021-01-25</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile Phone</td>
+<td align="left">2021-01-26</td>
+<td align="right">79</td>
+</tr>
+<tr class="odd">
+<td align="left">Mobile Phone</td>
+<td align="left">2021-01-27</td>
+<td align="right">62</td>
+</tr>
+<tr class="even">
+<td align="left">Mobile Phone</td>
+<td align="left">2021-01-28</td>
+<td align="right">60</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="multiple-dimensions-multiple-metrics" class="section level3">
+<h3>Multiple Dimensions, Multiple Metrics</h3>
+<p>Working with multiple dimensions is much easier once you understand two fundamental aspects of the 2.0 API, which may seem contradictory at first:</p>
+<ul>
+<li><em>Each API call is limited to a single dimension.</em></li>
+<li><em>The API can be used to pull data with an unlimited number of dimensions.</em></li>
+</ul>
+<p>The trick to reconciling these two statements is that any “single dimension” call can be <em>filtered</em> by an unlimited number of <em>other</em> dimensions.</p>
+<div id="consider-multiple-dimensions-in-analysis-workspace" class="section level4">
+<h4>Consider Multiple Dimensions in Analysis Workspace</h4>
+<p>A thought experiment to explain how this works is to imagine that you are in Analysis Workspace (or, actually go into Analysis Workspace and try this directly to make it a real experiment rather than an experiment of the mind):</p>
+<ol style="list-style-type: decimal">
+<li>Create a blank freeform table.</li>
+<li>Using <em>only</em> your mouse (no keyboard keys allowed!) create a freeform table report that has two dimensions.</li>
+</ol>
+<p>Each drag-and-drop with your mouse triggers a new API call. To build a freeform table that has <strong>Marketing Channel</strong> broken down by <strong>Mobile Device Type</strong> might look something like the following:</p>
+<ol style="list-style-type: decimal">
+<li>[Click and drag] <strong>Marketing Channel</strong> onto the freeform table. [API Call #1]</li>
+<li>[Click and drag] <strong>Mobile Device Type</strong> onto the first marketing channel in the list: <strong>Direct</strong> (for instance). [API Call #2]</li>
+<li>[Click and drag] <strong>Mobile Device Type</strong> onto the second marketing channel in the list: <strong>Paid Search</strong>. [API Call #3]</li>
+<li>[Click and drag] <strong>Mobile Device Type</strong> onto the third marketing channel the list: <strong>Natural Search</strong>. [API Call #4]</li>
+<li>[Click and drag] <strong>Mobile Device Type</strong> onto the third marketing channel the list: <strong>Display</strong>. [API Call #5]</li>
+</ol>
+<p>At this point, you’re cursing the constraint of not being able to use the <code>&lt;Shift&gt;</code> key! But, each of those steps is actually an API call that Analysis Worskpace is making to the 2.0 API:</p>
+<ol style="list-style-type: decimal">
+<li>API Call #1 is a simple, single-dimension call that returns a table listing all of the <strong>Marketing Channel</strong> values.</li>
+<li>API Call #2 is <em>also</em> a single-dimension API call, but the single dimension being queried is now <strong>Mobile Device</strong> type. But, that query has a constraint on it, in that it is filtered to only include results where <strong>Marketing Channel = Direct</strong> (the first marketing channel in the list; that’s the value we dragged and dropped <strong>Mobile Device Type</strong> on).</li>
+<li>API Call #3 is similar to #2, except the results are filtered for <strong>Marketing Channel = Page Search</strong>).</li>
+<li>And so on…</li>
+</ol>
+<p>These API calls all happen relatively quickly (<em>wildly</em> faster than API calls using the older v1.4 API), but they still all have to happen, and they happen one after another (serially rather than in parallel).</p>
+<p>To push this experiment one step farther, think about what you would have to do if you wanted to drill down to a <em>third</em> dimension: <strong>Entry Page</strong>. You would have to repeatedly drag the <strong>Entry Page</strong> dimension onto each of:</p>
+<ul>
+<li><strong>Direct</strong> &gt; <strong>Mobile Phone</strong></li>
+<li><strong>Direct</strong> &gt; <strong>Other</strong></li>
+<li><strong>Direct</strong> &gt; <strong>Tablet</strong></li>
+<li><strong>Paid Search</strong> &gt; <strong>Mobile Phone</strong></li>
+<li><strong>Paid Search</strong> &gt; <strong>Other</strong></li>
+<li><strong>Paid Search</strong> &gt; <strong>Tablet</strong></li>
+<li><strong>Natural Search</strong> &gt; <strong>Mobile Phone</strong></li>
+<li><strong>Natural Search</strong> &gt; <strong>Other</strong></li>
+<li><strong>Natural Search</strong> &gt; <strong>Tablet</strong></li>
+<li>Etc.</li>
+</ul>
+<p>For the first call above, the API call for the single dimension <strong>Entry Page</strong> filtered to only include results where <strong>Marketing Channel = Direct</strong> AND <strong>Mobile Device Type = Mobile Phone</strong>.</p>
+<p>To build a freeform table in Analysis Workspace that has three dimensions fully broken down would require dozens of drag-and-drop actions! It’s possible that that tedium is one of the reasons that you’re looking to <code>adobeanalyticsr</code> in the first place. As well you should! <code>aw_freeform_table()</code> handles these multiple API calls for you!</p>
+</div>
+<div id="multiple-dimensions-with-aw_freeform_table" class="section level4">
+<h4>Multiple Dimensions with aw_freeform_table()</h4>
+<p>On the one hand, all of the exposition above may seem like overkill, because all you have to do with <code>aw_freeform_table()</code> to pull multiple dimensions is to…pass a vector of dimensions to the <code>dimensions</code> argument!</p>
+<p>Where things get a little trickier is when it comes to specifying how many rows to include for each dimension level, and, more importantly, for constructing the function calls so that they run as quickly as possible. To illustrate, we’ll explore a scenario where we want to get <strong>Visits</strong> broken down by <strong>Mobile Device Type</strong> and <strong>Browser</strong>.</p>
+<p>First, let’s query each of the dimensions independently to see how many unique dimension values we’re dealing with. This isn’t something that is required, but we’re going to do a little math to illustrate the differences that dimension order can make.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>device_types &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb14-2"><a href="#cb14-2"></a>                        <span class="dt">dimensions =</span> <span class="st">&quot;mobiledevicetype&quot;</span>,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>,</span>
+<span id="cb14-4"><a href="#cb14-4"></a>                        <span class="co"># The default of 5 is probably going to get all of them,</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>                        <span class="co"># but set a higher cutoff just in case.</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>                        <span class="dt">top =</span> <span class="dv">10</span>)</span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="co">#&gt; A total of 3 rows have been pulled.</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a>browsers &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb14-10"><a href="#cb14-10"></a>                        <span class="dt">dimensions =</span> <span class="st">&quot;browser&quot;</span>,</span>
+<span id="cb14-11"><a href="#cb14-11"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>,</span>
+<span id="cb14-12"><a href="#cb14-12"></a>                        <span class="co"># We want to get all of the browsers, so set top as a high </span></span>
+<span id="cb14-13"><a href="#cb14-13"></a>                        <span class="co"># value rather than the default of &quot;5&quot;</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a>                        <span class="dt">top =</span> <span class="dv">1000</span>)</span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="co">#&gt; A total of 113 rows have been pulled.</span></span></code></pre></div>
+<p>When making our actual call to get both dimensions at once, we have two options for the <code>dimensions</code> argument value:</p>
+<ul>
+<li><code>dimensions = c(&quot;mobiledevicetype&quot;, &quot;browser&quot;)</code></li>
+<li><code>dimensions = c(&quot;browser&quot;, &quot;mobiledevicetype&quot;)</code></li>
+</ul>
+<p>Assuming we set <code>top</code> appropriately to include all possible values, we should get the same data, ultimately. But, the number of API calls required behind the scenes and, therefore, the time it will take for the function to run, will vary quite a bit between these two!</p>
+<p>For <strong><code>dimensions = c(&quot;mobiledevicetype&quot;, &quot;browser&quot;)</code></strong>, the API calls will be:</p>
+<ol style="list-style-type: decimal">
+<li>One call to get the full list of <code>mobiledevicetype</code> values.</li>
+<li>One query for <em>each</em> of the 3 <code>mobiledevicetype</code> values to get each value broken down by <code>browser</code>.</li>
+</ol>
+<p>This will result in a total of <strong>4 API calls.</strong></p>
+<p>Let’s try it out, including logging how long the function takes to run.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>start_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb15-4"><a href="#cb15-4"></a>                        <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">&quot;mobiledevicetype&quot;</span>, <span class="st">&quot;browser&quot;</span>),</span>
+<span id="cb15-5"><a href="#cb15-5"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>,</span>
+<span id="cb15-6"><a href="#cb15-6"></a>                        <span class="dt">top =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">1000</span>))</span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="co">#&gt; Estimated runtime: 8.8sec./0.15min.</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="co">#&gt; 1 of 11 possible data requests complete. Starting the next 3 requests.</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="co">#&gt; A total of 125 rows have been pulled.</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a></span>
+<span id="cb15-11"><a href="#cb15-11"></a>end_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</span>
+<span id="cb15-12"><a href="#cb15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="co"># Show the summary for the resulting df for comparison to the next approach.</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a><span class="kw">summary</span>(df)</span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt;  mobiledevicetype     browser              visits       </span></span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="co">#&gt;  Length:125         Length:125         Min.   :   1.00  </span></span>
+<span id="cb15-17"><a href="#cb15-17"></a><span class="co">#&gt;  Class :character   Class :character   1st Qu.:   1.00  </span></span>
+<span id="cb15-18"><a href="#cb15-18"></a><span class="co">#&gt;  Mode  :character   Mode  :character   Median :   3.00  </span></span>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="co">#&gt;                                        Mean   :  56.66  </span></span>
+<span id="cb15-20"><a href="#cb15-20"></a><span class="co">#&gt;                                        3rd Qu.:  11.00  </span></span>
+<span id="cb15-21"><a href="#cb15-21"></a><span class="co">#&gt;                                        Max.   :3488.00</span></span>
+<span id="cb15-22"><a href="#cb15-22"></a></span>
+<span id="cb15-23"><a href="#cb15-23"></a><span class="co"># Output how long it took to run the query</span></span>
+<span id="cb15-24"><a href="#cb15-24"></a>end_time <span class="op">-</span><span class="st"> </span>start_time</span>
+<span id="cb15-25"><a href="#cb15-25"></a><span class="co">#&gt; Time difference of 4.994079 secs</span></span></code></pre></div>
+<p>Now, instead, let’s consider what happens if we swap the order of our dimensions and, instead, use <strong><code>dimensions = c(&quot;browser&quot;, &quot;mobiledevicetype&quot;)</code></strong>. Now, the API calls will be:</p>
+<ol style="list-style-type: decimal">
+<li>One call to get the full list of <code>browser</code> values.</li>
+<li>One query for <em>each</em> of the 113 <code>browser</code> values to get each value broken down by <code>mobiledevicetype</code>.</li>
+</ol>
+<p>This will result in a total of <strong>114 API calls!!!</strong></p>
+<p>Let’s try it out:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>start_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a>df &lt;-<span class="st"> </span><span class="kw">aw_freeform_table</span>(<span class="dt">date_range =</span> <span class="kw">c</span>(start_date, end_date),</span>
+<span id="cb16-4"><a href="#cb16-4"></a>                        <span class="dt">dimensions =</span> <span class="kw">c</span>(<span class="st">&quot;browser&quot;</span>, <span class="st">&quot;mobiledevicetype&quot;</span>),</span>
+<span id="cb16-5"><a href="#cb16-5"></a>                        <span class="dt">metrics =</span> <span class="st">&quot;visits&quot;</span>,</span>
+<span id="cb16-6"><a href="#cb16-6"></a>                        <span class="dt">top =</span> <span class="kw">c</span>(<span class="dv">1000</span>, <span class="dv">10</span>))</span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="co">#&gt; Estimated runtime: 800.8sec./13.35min.</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="co">#&gt; 1 of 1001 possible data requests complete. Starting the next 113 requests.</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="co">#&gt; A total of 125 rows have been pulled.</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a></span>
+<span id="cb16-11"><a href="#cb16-11"></a>end_time &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</span>
+<span id="cb16-12"><a href="#cb16-12"></a></span>
+<span id="cb16-13"><a href="#cb16-13"></a><span class="co"># Show the summary for the resulting df for comparison to the next approach.</span></span>
+<span id="cb16-14"><a href="#cb16-14"></a><span class="kw">summary</span>(df)</span>
+<span id="cb16-15"><a href="#cb16-15"></a><span class="co">#&gt;    browser          mobiledevicetype       visits       </span></span>
+<span id="cb16-16"><a href="#cb16-16"></a><span class="co">#&gt;  Length:125         Length:125         Min.   :   1.00  </span></span>
+<span id="cb16-17"><a href="#cb16-17"></a><span class="co">#&gt;  Class :character   Class :character   1st Qu.:   1.00  </span></span>
+<span id="cb16-18"><a href="#cb16-18"></a><span class="co">#&gt;  Mode  :character   Mode  :character   Median :   3.00  </span></span>
+<span id="cb16-19"><a href="#cb16-19"></a><span class="co">#&gt;                                        Mean   :  56.66  </span></span>
+<span id="cb16-20"><a href="#cb16-20"></a><span class="co">#&gt;                                        3rd Qu.:  11.00  </span></span>
+<span id="cb16-21"><a href="#cb16-21"></a><span class="co">#&gt;                                        Max.   :3488.00</span></span>
+<span id="cb16-22"><a href="#cb16-22"></a></span>
+<span id="cb16-23"><a href="#cb16-23"></a><span class="co"># Output how long it took to run the query</span></span>
+<span id="cb16-24"><a href="#cb16-24"></a>end_time <span class="op">-</span><span class="st"> </span>start_time</span>
+<span id="cb16-25"><a href="#cb16-25"></a><span class="co">#&gt; Time difference of 1.615242 mins</span></span></code></pre></div>
+<p>This is a <em>BIG</em> difference in run-time even though, aside from the column order being slightly different, the resulting data is identical.</p>
+<p>If you followed the Analysis Workspace experiment in the previous section, then another way to think about this is that (without the <code>&lt;Shift&gt;</code> key), breaking down <strong>Mobile Device Type</strong> by <strong>Browser</strong> would require a <em>lot</em> less clicking and dropping than breaking down <strong>Browser</strong> by <strong>Mobile Device Type</strong>. In the latter, you would have to drag <strong>Mobile Device Type</strong> onto <em>each</em> of the numerous <strong>Browser</strong> values one at a time!</p>
+<p>The good (great?) news is that you can string as many dimensions together as you would like and then let R just take it from there and get a resulting data frame with multiple dimensions! The order of your dimensions just can have a dramatic effect on how long you have to wait for the results to be returned.</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
