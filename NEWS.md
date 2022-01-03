@@ -1,4 +1,4 @@
-# adobeanalyticsr 0.2.0
+# adobeanalyticsr 0.2.1
 
 * Added support for JWT Authentication
 * Changed authentication process with new functions 
@@ -19,7 +19,6 @@
 * Removed the search clause restriction to enable "CONTAINS" to be understood as the default for `aw_freeform_report()` search arguments.
 * Added search argument to recursive call
 * Updated date_range argument to handle datetimes better
-  
 
 # adobeanalyticsr 0.1.5
 

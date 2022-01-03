@@ -1,6 +1,6 @@
 Package: adobeanalyticsr
 Type: Package
-Version: 0.2.0
+Version: 0.2.1
 Title: R Client for 'Adobe Analytics' API 2.0
 Description: Connect to the 'Adobe Analytics' API v2.0 <https://github.com/AdobeDocs/analytics-2.0-apis>
              which powers 'Analysis Workspace'. The package was developed
@@ -28,11 +28,11 @@ VignetteBuilder: knitr
 BugReports: https://github.com/benrwoodard/adobeanalyticsr/issues
 URL: https://github.com/benrwoodard/adobeanalyticsr
 NeedsCompilation: no
-Packaged: 2021-12-29 02:38:56 UTC; ben.woodard
+Packaged: 2022-01-03 13:08:16 UTC; ben.woodard
 Author: Ben Woodard [aut, cre],
   Tim Wilson [aut, ctb],
   Charles Gallagher [ctb],
   Mark Edmondson [ctb]
 Maintainer: Ben Woodard <benrwoodard@gmail.com>
 Repository: CRAN
-Date/Publication: 2022-01-03 11:10:02 UTC
+Date/Publication: 2022-01-03 13:50:21 UTC
