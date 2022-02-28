@@ -7,9 +7,6 @@
 #' @param req_path The endpoint for that particular report
 #' @param debug Default `FALSE`. Set this to TRUE to see the information about the api calls as they happen.
 #' @param company_id Set in environment args, or pass directly here
-#' @param client_id Set in environment args, or pass directly here
-#' @param client_secret Set in environment args, or pass directly here
-#' @param use_oob Always set to TRUE. Needed for tests
 #'
 #' @examples
 #'
@@ -37,10 +34,11 @@ aw_call_api <- function(req_path,
 
     request_url <- sprintf("https://analytics.adobe.io/api/%s/%s",
                            company_id, req_path)
-    debug_call <- NULL
 
     if (debug) {
-        debug_call <- httr::verbose(data_out = TRUE, data_in = TRUE, info = TRUE)
+      debug_call <- httr::verbose(data_out = TRUE, data_in = TRUE, info = TRUE)
+    } else {
+      debug_call <- NULL
     }
 
     req <- httr::RETRY("GET",
