@@ -27,6 +27,11 @@
 #' @param create_seg Used to determine if the segment should be created in the
 #' report suite or if the definition should be returned to be used in a freeform
 #' table API call. Default is FALSE
+#' @param tagNames Apply tag names to the newly created calculated metric. Single
+#' string or a vector.
+#' @param internal Determines if this segment is to be available in the UI.
+#' Default is FALSE, meaning the segment will not be available in the UI, nor will
+#' the ID be available in the `aw_get_segments` function call.
 #' @param rsid Adobe report suite ID (RSID).  If an environment variable called
 #' `AW_REPORTSUITE_ID` exists in `.Renviron` or elsewhere and no `rsid` argument
 #' is provided, then the `AW_REPORTSUITE_ID` value will be used. Use [aw_get_reportsuites()]
@@ -82,6 +87,8 @@ seg_build <- function(name = NULL,
                       sequence_context = 'hits',
                       exclude = FALSE,
                       create_seg = FALSE,
+                      tagNames = NULL,
+                      internal = FALSE,
                       debug = FALSE,
                       rsid = Sys.getenv('AW_REPORTSUITE_ID'),
                       company_id = Sys.getenv("AW_COMPANY_ID")){
@@ -105,6 +112,7 @@ seg_build <- function(name = NULL,
         seg <- list(
           name = name,
           description = description,
+          internal = internal,
           definition = list(
             container = list(
               func = 'container',
@@ -120,6 +128,7 @@ seg_build <- function(name = NULL,
         seg <- list(
           name = name,
           description = description,
+          internal = internal,
           definition = list(
             container = list(
               func = 'container',
@@ -141,6 +150,7 @@ seg_build <- function(name = NULL,
         seg <-  list(
           name = name,
           description = description,
+          internal = internal,
           definition = list(
             container = list(
               func = 'container',
@@ -159,6 +169,7 @@ seg_build <- function(name = NULL,
         seg <-  list(
           name = name,
           description = description,
+          internal = internal,
           definition = list(
             container = list(
               func = 'container',
@@ -187,21 +198,23 @@ seg_build <- function(name = NULL,
      seg <- list(
        name = name,
        description = description,
-        definition = list(
+       internal = internal,
+       definition = list(
          container = list(
            func = 'container',
            context = context,
            pred = containers[[1]]
-           ),
+         ),
          func = 'segment',
          version = version
-         ),
+       ),
        rsid = rsid
-       )
+     )
       } else {
         seg <-  list(
           name = name,
           description = description,
+          internal = internal,
           definition = list(
             func = 'segment',
             version = version,
@@ -218,20 +231,19 @@ seg_build <- function(name = NULL,
         )
       }
   } else if(is.null(rules) && is.null(containers) && !is.null(sequences)) {
-    sequence_dir <- dplyr::case_when(sequence == 'in_order' ~ 'sequence',
-                                     sequence == 'after' ~ 'sequence-prefix',
-                                     sequence == 'before' ~ 'sequence-suffix')
-
+    #define the sequence direction
+    f.seq_dir <- function(sequence){
+      dplyr::case_when(sequence == 'in_order' ~ 'sequence',
+                       sequence == 'after' ~ 'sequence-prefix',
+                       sequence == 'before' ~ 'sequence-suffix')
+    }
+    sequence_dir <- f.seq_dir(sequence)
     ## Add in the necessary 'container' and 'hits' variables to each rule for the sequence to work
     seq_items <- list()
     for (i in seq_along(sequences)) {
-      if (!is.null(sequences[[i]]$stream)) {
-        seq_items[[i]] <- list(
-          context = sequence_context,
-          func = 'container',
-          pred = sequences[[i]]
-        )
-      } else if (!is.null(sequences[[i]]$val)) {
+      if (!is.null(sequences[[i]]$pred$stream)) {
+        seq_items[[i]] <- sequences[[i]]
+      } else if (!is.null(sequences[[i]]$pred$val)) {
         seq_items[[i]] <- list(
           context = sequence_context,
           func = 'container',
@@ -246,6 +258,7 @@ seg_build <- function(name = NULL,
       list(
         name = name,
         description = description,
+        internal = internal,
         definition = list(
           container = list(
             func = 'container',
@@ -264,6 +277,7 @@ seg_build <- function(name = NULL,
       list(
         name = name,
         description = description,
+        internal = internal,
         definition = list(
           container = list(
             func = 'container',
@@ -290,10 +304,18 @@ seg_build <- function(name = NULL,
 
   if (!create_seg) {
    req <- jsonlite::toJSON(body, auto_unbox = T)
+   req
   } else if (create_seg) {
     req <- aw_call_api(req_path = req_path,
                         body = body,
                         company_id = company_id)
+    if(!is.null(tagNames)){
+      tags_add(company_id = company_id,
+               componentId =  jsonlite::fromJSON(req)$id,
+               componentType = 'segment',
+               tagNames = tagNames,
+               debug = debug)
+    }
+    jsonlite::fromJSON(req)
   }
- req
 }

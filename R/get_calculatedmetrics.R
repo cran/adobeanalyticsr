@@ -104,23 +104,27 @@ aw_get_calculatedmetrics <- function(company_id = Sys.getenv("AW_COMPANY_ID"),
   # Reference: https://github.com/AdobeDocs/analytics-2.0-apis/blob/master/calculatedmetrics.md
   assertthat::assert_that(length(name) < 2, msg = "'name' is a search string and may not have length > 1\nUse 'filterByIds' to request specific segments")
 
+  # if ownerId value is supplied change includeType to NULL so that the filter will be recognized by the API
+ if(!is.null(ownerId)) {
+   includeType = NULL
+ }
 
   query_param <- list(
     rsids = rsids,
     ownerId = ownerId,
     filterByIds = filterByIds,
     toBeUsedInRsid = toBeUsedInRsid,
-    locale = "en_US",
+    locale = locale,
     name = name,
     tagNames = tagNames,
     favorite = favorite,
     approved = approved,
-    limit = 1000,
-    page = 0,
-    sortDirection = 'DESC',
+    limit = limit,
+    page = page,
+    sortDirection = sortDirection,
     sortProperty = sortProperty,
     expansion = expansion,
-    includeType = 'all'
+    includeType = includeType
   )
 
   urlstructure <- paste('calculatedmetrics', format_URL_parameters(query_param), sep = "?")

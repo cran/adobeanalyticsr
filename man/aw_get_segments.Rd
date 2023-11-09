@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_segments.R
 \name{aw_get_segments}
 \alias{aw_get_segments}
-\title{Get list of segments}
+\title{Get a list of segments}
 \usage{
 aw_get_segments(
   company_id = Sys.getenv("AW_COMPANY_ID"),
@@ -30,7 +30,7 @@ Use \code{\link{get_me}} to get a list of available \code{company_id} values.}
 list of RSIDs. Specify multiple RSIDs as a vector (i.e., "\verb{rsids = c("rsid_1", rsid_2",...rsid_n")}").
 Use \code{\link{aw_get_reportsuites}} to get a list of available \code{rsid} values.}
 
-\item{segmentFilter}{Filter list to only include suites in this list of segment IDs (comma-delimited)}
+\item{segmentFilter}{Filter list to only include segments in the list of segment IDs (comma-delimited)}
 
 \item{locale}{The locale that segment details should be returned in. The default is \code{en_US}.}
 
@@ -71,5 +71,5 @@ or a vector of values (e.g., \code{expansion = c("modified", "ownerFullName")}).
 A data frame of segments and their meta data.
 }
 \description{
-Retrieve all segments
+Retrieve all segments or a filtered list of segments
 }

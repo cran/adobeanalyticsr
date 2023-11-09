@@ -1,6 +1,6 @@
-#' Get list of segments
+#' Get a list of segments
 #'
-#' Retrieve all segments
+#' Retrieve all segments or a filtered list of segments
 #'
 #' @param company_id Company ID. If an environment variable called `AW_COMPANY_ID` exists in `.Renviron` or
 #' elsewhere and no `company_id` argument is provided, then the `AW_COMPANY_ID` value will be used.
@@ -8,7 +8,7 @@
 #' @param rsids Filter the list to only include segments tied to a specified RSID or
 #' list of RSIDs. Specify multiple RSIDs as a vector (i.e., "`rsids = c("rsid_1", rsid_2",...rsid_n")`").
 #' Use \code{\link{aw_get_reportsuites}} to get a list of available `rsid` values.
-#' @param segmentFilter Filter list to only include suites in this list of segment IDs (comma-delimited)
+#' @param segmentFilter Filter list to only include segments in the list of segment IDs (comma-delimited)
 #' @param locale The locale that segment details should be returned in. The default is `en_US`.
 #' @param name Filter the list to only include segments that contain the specified **name**.
 #' This is case-insensitive and is a simple, single string match.

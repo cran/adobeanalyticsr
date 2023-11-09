@@ -1,3 +1,34 @@
+# adobeanalyticsr 0.4.0
+
+* added calculated metrics management functions
+  - get_cm_functions
+  - cm_function
+  - cm_formula
+  - cm_build
+  - cm_delete
+  - cm_update
+  - cm_val
+  - cm_copy
+* added segment management functions
+  - seg_copy
+  - seg_delete
+  - seg_update
+* added project management functions
+  - aw_get_project_config
+  - aw_get_projects
+  - proj_build
+  - proj_update
+* Updated supporting functions
+  - aw_call_api now handles `Content-type` in the head of the api call
+* Bug fix 
+  - aw_get_calculatedmetrics function now recognizes filters due to an `includeType` argument bug fix
+  - issue 49 regarding ownerId filter not being recognized was fixed
+  - fixed issue #142 related to building sequential segments
+* Enhancement
+  - added 'internal' argument for calc metrics and segments that can be used to prevent
+  segments and calc metrics from showing in the UI and causing confusion
+
+
 # adobeanalyticsr 0.3.3
 
 * Update to utilities make_timeframe function test

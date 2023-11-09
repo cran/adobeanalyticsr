@@ -4,3 +4,4 @@
 
 library(knitr)
 knit("vignettes/getting-started.Rmd.orig", "vignettes/getting-started.Rmd")
+knit("vignettes/working_with_calculated_metrics.Rmd.orig", "vignettes/working_with_calculated_metrics.Rmd")

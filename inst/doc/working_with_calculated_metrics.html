@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Analysis Workflows And Calculated Metrics</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Analysis Workflows And Calculated
+Metrics</h1>
+
+
+
+<div id="a-little-housekeeping" class="section level2">
+<h2>A little housekeeping</h2>
+<p>This vignette uses the Adobe Analytics University Student Access
+account to show how to work with calculated metrics using R and the API.
+If you do not have access to the account, you can easily get it by going
+to the free LinkedIn Learning course, “Adobe Analytics Essential
+Training”, and registering for access.</p>
+<p>If you haven’t yet taken the course, it is well worth your time. Eric
+Matisoff does a great job walking through all the different amazing
+parts of Adobe Analytics, especially Analysis Workspace. Specifically,
+check out the third section of the first chapter to see a quick overview
+of the calculated metrics builder user interface in action.</p>
+</div>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>I won’t be going into the any detail around authenticate in this
+article so if you are needing more help with that, make sure to check
+out the “Getting Started” vignette. With all that being set, let’s get
+things going! First, we need to load the libraries and authenticate.</p>
+<pre><code>## Load the packages needed
+library(adobeanalyticsr)
+library(tidyr) ## needed for some of the data wrangling
+library(jsonlite) ## Will help in visualizing calculated metrics definitions
+
+aw_auth(&#39;oauth&#39;)
+
+##Check to make sure you have been logged into the correct account profile
+get_me()
+
+
+company_id &lt;- &#39;adobea8cf&#39;
+rsid &lt;- &#39;igeo1xxpnwcidadobepm&#39;
+
+## Create a segment to be used farther down in the demo
+#create the segment rule
+segment_rule &lt;- seg_rule(dimension = &#39;mobiledevicename&#39;,
+                         verb = &#39;exists&#39;)
+
+#build the segment and capture the segment id
+seginfo &lt;- seg_build(name = &#39;NON Desktop traffic&#39;, 
+                     description = &#39;This is a segment that filters out everything that is not associated with an identified mobile device&#39;, 
+                     rules = list(segment_rule), 
+                     create_seg = T)
+segid &lt;- jsonlite::fromJSON(seginfo)$id</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th>globalCompanyId</th>
+<th>companyName</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>adobea8cf</td>
+<td>Adobe Analytics University Student Access</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="retrieve-multiple-calculated-metrics" class="section level2">
+<h2>Retrieve multiple calculated metrics</h2>
+<p>The following example shows a calculated metrics request for a
+response localized in US English, limited to the first page, and with
+the size of ten responses per page.</p>
+<pre><code>cms &lt;- aw_get_calculatedmetrics(includeType = &#39;all&#39;, 
+                                rsids = rsid, 
+                                company_id = company_id)
+knitr::kable(head(cms), format = &#39;pipe&#39;)</code></pre>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="23%" />
+<col width="20%" />
+<col width="18%" />
+<col width="6%" />
+<col width="5%" />
+<col width="6%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">rsid</th>
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">owner</th>
+<th align="left">polarity</th>
+<th align="right">precision</th>
+<th align="left">type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_612a3e49262f3f1415082cee</td>
+<td align="left">Page</td>
+<td align="left"></td>
+<td align="left">200456743</td>
+<td align="left">positive</td>
+<td align="right">0</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="even">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_61336bad44b1bd4f51a9e2ae</td>
+<td align="left">Bounce Rate (Bounces / Visits)</td>
+<td align="left"></td>
+<td align="left">200456743</td>
+<td align="left">positive</td>
+<td align="right">1</td>
+<td align="left">percent</td>
+</tr>
+<tr class="odd">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_61336f20c7e6035b10558588</td>
+<td align="left">Pages Count</td>
+<td align="left"></td>
+<td align="left">200456743</td>
+<td align="left">positive</td>
+<td align="right">0</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="even">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_61416ee549ff383abc37c6ab</td>
+<td align="left">cart convert 1</td>
+<td align="left">cart checkouts per page view</td>
+<td align="left">200483715</td>
+<td align="left">positive</td>
+<td align="right">4</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="odd">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_614179ec49ff383abc37c6c3</td>
+<td align="left">Conversions</td>
+<td align="left"></td>
+<td align="left">200484198</td>
+<td align="left">positive</td>
+<td align="right">0</td>
+<td align="left">decimal</td>
+</tr>
+<tr class="even">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_614a8d494ba44e49bb383be5</td>
+<td align="left">cart convert 1</td>
+<td align="left"></td>
+<td align="left">200484193</td>
+<td align="left">positive</td>
+<td align="right">4</td>
+<td align="left">decimal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="retrieving-a-single-calculated-metric" class="section level2">
+<h2>Retrieving a single calculated metric</h2>
+<p>To retrieve a single calculated metric, include its id in the
+request.</p>
+<pre><code>cm &lt;- aw_get_calculatedmetrics(filterByIds = cms$id[[1]], #add the calculated metric
+                               company_id = company_id,
+                               rsids = rsid, 
+                               expansion = &#39;definition&#39; #use the expansion argument to see the definition
+                               )
+knitr::kable(cm)</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="15%" />
+<col width="28%" />
+<col width="3%" />
+<col width="9%" />
+<col width="7%" />
+<col width="6%" />
+<col width="7%" />
+<col width="6%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">rsid</th>
+<th align="left">id</th>
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">owner</th>
+<th align="left">polarity</th>
+<th align="right">precision</th>
+<th align="left">type</th>
+<th align="left">definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">igeo1xxpnwcidadobepm</td>
+<td align="left">cm300010142_612a3e49262f3f1415082cee</td>
+<td align="left">Page</td>
+<td align="left"></td>
+<td align="left">200456743</td>
+<td align="left">positive</td>
+<td align="right">0</td>
+<td align="left">decimal</td>
+<td align="left">visualization-group</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="calculated-metric-management-functions" class="section level2">
+<h2>Calculated metric management functions</h2>
+<p>Calculated Metrics are comprised of several different mathematical
+functions that work on available metrics for a given report suite.</p>
+<div id="get-all-functions" class="section level3">
+<h3>Get all functions</h3>
+<p>Returns a full list of calculated metric functions that the user can
+access. See the <a href="https://experienceleague.adobe.com/docs/analytics/components/calculated-metrics/calcmetrics-reference/cm-functions.html?lang=en">functions
+documentation</a> for more information on available functions.</p>
+<pre><code>all_functions &lt;- get_cm_functions(company_id = company_id)
+
+knitr::kable(head(all_functions[1:6]))</code></pre>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="4%" />
+<col width="6%" />
+<col width="17%" />
+<col width="52%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">id</th>
+<th align="left">category</th>
+<th align="left">persistable</th>
+<th align="left">name</th>
+<th align="left">description</th>
+<th align="left">definition</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">col-sum</td>
+<td align="left">basic</td>
+<td align="left">TRUE</td>
+<td align="left">Column Sum</td>
+<td align="left">Adds all of the numeric values for a metric within a
+column (across the elements of a dimension).</td>
+<td align="left">calc-metric</td>
+</tr>
+<tr class="even">
+<td align="left">_new-lift-functional</td>
+<td align="left">internal</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">calc-metric</td>
+</tr>
+<tr class="odd">
+<td align="left">_lift-cumul-avg-impl</td>
+<td align="left">internal</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">calc-metric</td>
+</tr>
+<tr class="even">
+<td align="left">_waskr-N-control</td>
+<td align="left">internal</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">calc-metric</td>
+</tr>
+<tr class="odd">
+<td align="left">ls-intercept-quadratic</td>
+<td align="left">advanced</td>
+<td align="left">TRUE</td>
+<td align="left">Quadratic regression: Intercept</td>
+<td align="left">Quadratic regression: Y = ( a + b X ) ^ 2, Returns
+a.</td>
+<td align="left">calc-metric</td>
+</tr>
+<tr class="even">
+<td align="left">_chi2-test-stat</td>
+<td align="left">internal</td>
+<td align="left">FALSE</td>
+<td align="left">NA</td>
+<td align="left">NA</td>
+<td align="left">calc-metric</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="create-a-calculated-metric" class="section level3">
+<h3>Create a calculated metric</h3>
+<p>The process of creating a calculated metric has been designed in a
+modular way to enable the systematic approach to building and
+maintaining complex calculated metrics in the most efficient way. The
+goal is to enhance analysis and data science workflows. The essential
+elements of a calculated metric are: function, formula, build. The
+following code chunks will illustrate the basics of interacting with
+each element.</p>
+<div id="create-a-function-object" class="section level4">
+<h4>Create a function object</h4>
+<p>Calculated Metrics are comprised of several different mathematical
+functions that work on available metrics for a given report suite. See
+the <a href="https://experienceleague.adobe.com/docs/analytics/components/calculated-metrics/calcmetrics-reference/cm-functions.html?lang=en">functions
+documentation</a> for more information on available functions.</p>
+<p>Currently the package only supports 2 types of functions:</p>
+<ol style="list-style-type: decimal">
+<li>Any function that take a single metric</li>
+</ol>
+<ul>
+<li>Examples of these functions include
+<code>Absolute Value (Row)</code> and <code>Column Maximum</code>. Both
+of which apply a function on a single metric. For a full list make sure
+to see the <a href="https://experienceleague.adobe.com/docs/analytics/components/calculated-metrics/calcmetrics-reference/cm-functions.html">functions
+documentation</a>.</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>The <code>Approximate Count Distinct (dimension)</code>
+function</li>
+</ol>
+<ul>
+<li>Returns the approximated distinct count of dimension items for the
+selected dimension. The function uses the HyperLogLog (HLL) method of
+approximating distinct counts. It is configured to guarantee the value
+is within 5% of the actual value 95% of the time.</li>
+</ul>
+<pre><code>?cm_function
+
+cm_func &lt;- cm_function(
+  func = &quot;col-sum&quot;,
+  metric = &quot;visits&quot;,
+  seg_filter = NULL,
+  rsid = rsid,
+  company_id = company_id
+)
+
+jsonlite::toJSON(cm_func, pretty = T, auto_unbox = T)</code></pre>
+<p>{ “func”: “col-sum”, “description”: “Column Sum”, “col”: { “func”:
+“metric”, “name”: “metrics/visits”, “description”: “Visits” } }</p>
+</div>
+<div id="create-a-formula-object" class="section level4">
+<h4>Create a formula object</h4>
+<p>A calculated metric formula takes to metric objects and applies an
+operator on them. You can nest formula or function objects within
+formulas to create complex operational containers. Keep in mind, unlike
+segment containers, these containers function like a math expression and
+determine the order of operations.</p>
+<pre><code>?cm_formula
+
+cm_form &lt;- cm_formula(
+  operator = &#39;divide&#39;,
+  metrics = list(cm_func, &quot;singlepagevisits&quot;),
+  seg_filters = NA, #add segment filters for each metric if needed
+  rsid = rsid,
+  company_id = company_id
+)
+
+jsonlite::toJSON(cm_form, pretty = T, auto_unbox = T)</code></pre>
+<p>{ “func”: “divide”, “col1”: { “func”: “col-sum”, “description”:
+“Column Sum”, “col”: { “func”: “metric”, “name”: “metrics/visits”,
+“description”: “Visits” } }, “col2”: { “func”: “metric”, “name”:
+“metrics/singlepagevisits”, “description”: “Single Page Visits” } }</p>
+</div>
+<div id="create-a-calculated-metric-object" class="section level4">
+<h4>Create a calculated metric object</h4>
+<p>Using the <code>cm_build</code> function gives the ability to create
+and validate simple and complex calculated metrics. If you are familiar
+with the calculated metrics user interface you should be able to quickly
+recognize what each aspect of the function arguments refer to but fo
+those who are less familiar the <a href="https://experienceleague.adobe.com/docs/analytics/components/calculated-metrics/calcmetric-workflow/cm-build-metrics.html?lang=en#areas-of-the-calculated-metrics-builder">calculated
+metrics builder documentation</a> may be of great use.</p>
+<pre><code>?cm_build
+
+cm_obj &lt;- cm_build(
+  name = &#39;Test Calculated Metric&#39;,
+  description = &#39;Test cm description&#39;,
+  formula = cm_form,
+  seg_filter = NULL,
+  polarity = &quot;positive&quot;,
+  precision = 0,
+  type = &quot;decimal&quot;,
+  create_cm = FALSE, #should this be created in the UI
+  debug = FALSE,
+  rsid = rsid,
+  company_id = company_id
+)
+
+cm_obj</code></pre>
+<p>{“rsid”:“igeo1xxpnwcidadobepm”,“name”:“Test Calculated
+Metric”,“description”:“Test cm
+description”,“definition”:{“formula”:{“func”:“divide”,“col1”:{“func”:“col-sum”,“description”:“Column
+Sum”,“col”:{“func”:“metric”,“name”:“metrics/visits”,“description”:“Visits”}},“col2”:{“func”:“metric”,“name”:“metrics/singlepagevisits”,“description”:“Single
+Page
+Visits”}},“version”:[1,0,0],“func”:“calc-metric”},“polarity”:“positive”,“precision”:0,“type”:“decimal”}</p>
+</div>
+</div>
+<div id="validate-a-calculated-metric-object" class="section level3">
+<h3>Validate a calculated metric object</h3>
+<p>Because report suites can have different configurations, dimensions,
+or metrics, a calculated metric that is valid in one report suite may
+not be valid in another. To determine which calculated metric to use in
+different report suites, and why it may or may not be available, you can
+use the cm_validate. This endpoint allows you to POST a definition along
+with a target report suite id. The validate endpoint responds with
+compatibility information on the calculated metric.</p>
+<pre><code>?cm_val
+
+cm &lt;- cm_val(cm_obj)
+
+cm</code></pre>
+<p>[1] “The calculated metric definition IS VALID”</p>
+<p>Once yo determine make we can create the new calculated metric in the
+UI by setting the argument <code>create_cm = TRUE</code>.</p>
+<pre><code>#create the calculated metric in the UI
+cm_obj &lt;- cm_build(
+  name = &#39;Test Calculated Metric&#39;,
+  description = &#39;Test cm description&#39;,
+  formula = cm_form,
+  seg_filter = NULL, #include an overall segment filter
+  polarity = &quot;positive&quot;,
+  precision = 0,
+  type = &quot;decimal&quot;,
+  create_cm = TRUE, #should this be created in the UI
+  debug = FALSE,
+  rsid = rsid,
+  company_id = company_id
+)
+
+knitr::kable(cm_obj)</code></pre>
+<p>{“rsid”:“igeo1xxpnwcidadobepm”,“id”:“cm300010142_6537f60dde0e706af6156fb1”,“name”:“Test
+Calculated Metric”,“description”:“Test cm
+description”,“isDeleted”:false,“migratedIds”:[],“internal”:false,“owner”:{“id”:200654087},“hidden”:false,“componentType”:“calculatedMetric”,“polarity”:“positive”,“precision”:0,“type”:“decimal”,“definition”:{“formula”:{“func”:“divide”,“col1”:{“func”:“col-sum”,“description”:“Column
+Sum”,“col”:{“func”:“metric”,“name”:“metrics/visits”,“description”:“Visits”}},“col2”:{“func”:“metric”,“name”:“metrics/singlepagevisits”,“description”:“Single
+Page
+Visits”}},“func”:“calc-metric”,“version”:[1,0,0]},“compatibility”:{“identityMetrics”:[{“identity”:“metrics/visits”},{“identity”:“metrics/singlepagevisits”}],“functions”:[“col-sum”,“divide”],“validator_version”:“1.0.0”,“supported_products”:[“oberon”],“supported_schema”:[“schema_oberon”,“schema_frag”]},“legacyId”:““,”categories”:[“Calculated
+Metrics”],“modified”:“2023-10-24T16:51:25Z”}</p>
+</div>
+<div id="adding-a-segment-filter" class="section level3">
+<h3>Adding a segment filter</h3>
+<p>On every level of a calculated metric, function, formula, and object,
+you can add an additional level of control by inserting a segment
+filter.</p>
+<pre><code>
+# use the new segment id to create a segment
+cm_obj_seg_filter &lt;- cm_build(
+  name = &#39;Test Segment Filtered Calculated Metric&#39;,
+  description = &#39;Test cm description that includes a segment id&#39;,
+  formula = cm_form,
+  seg_filter = segid, #adding the segment here
+  create_cm = FALSE,
+  rsid = rsid,
+  company_id = company_id
+)
+
+cm_val(cm_obj_seg_filter)</code></pre>
+<p>[1] “The calculated metric definition IS VALID”</p>
+<p>Now that we know it is a valid segment, let’s create it and pull the
+data along with the previous segment to see the difference in the
+data.</p>
+<pre><code># use the new segment id to create a segment
+cm_obj_seg_filter &lt;- cm_build(
+  name = &#39;Test Segment Filtered Calculated Metric&#39;,
+  description = &#39;Test cm description that includes a segment id&#39;,
+  formula = cm_form,
+  seg_filter = segid, #adding the segment here
+  create_cm = TRUE,
+  rsid = rsid,
+  company_id = company_id
+)
+
+cm_seg_filter &lt;- jsonlite::fromJSON(cm_obj_seg_filter)$id
+
+cm_no_seg_filter &lt;- jsonlite::fromJSON(cm_obj)$id
+
+df_cm &lt;- aw_freeform_table(company_id = company_id, 
+                           rsid = rsid, 
+                           metrics = c(cm_no_seg_filter, cm_seg_filter),
+                           dimensions = &#39;daterangeday&#39;, 
+                           prettynames = T)
+knitr::kable(df_cm)</code></pre>
+<table>
+<colgroup>
+<col width="14%" />
+<col width="31%" />
+<col width="54%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Day</th>
+<th align="right">Test Calculated Metric</th>
+<th align="right">Test Segment Filtered Calculated Metric</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2023-09-26</td>
+<td align="right">3707.0726</td>
+<td align="right">Inf</td>
+</tr>
+<tr class="even">
+<td align="left">2023-09-25</td>
+<td align="right">460.1371</td>
+<td align="right">465.8842</td>
+</tr>
+<tr class="odd">
+<td align="left">2023-09-27</td>
+<td align="right">401.8156</td>
+<td align="right">406.0459</td>
+</tr>
+<tr class="even">
+<td align="left">2023-10-20</td>
+<td align="right">383.0642</td>
+<td align="right">348.4961</td>
+</tr>
+<tr class="odd">
+<td align="left">2023-10-14</td>
+<td align="right">373.7211</td>
+<td align="right">348.4961</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="update-a-calculated-metric" class="section level3">
+<h3>Update a calculated metric</h3>
+<p>To update the name or description it is as simple as adding them
+within a list function of the <code>updates</code> argument.</p>
+<pre><code>?cm_update
+
+cm_updated &lt;- cm_update(
+  id = cm_no_seg_filter,
+  updates = list(name = &quot;new name&quot;,
+                 description = &quot;this is a new description&quot;),
+  locale = &quot;en_US&quot;,
+  debug = FALSE,
+  company_id = company_id
+)
+# Name Change
+c(`old name` =  jsonlite::fromJSON(cm_obj)$name,`new name` = cm_updated$name)
+
+# Description Change
+c(`old description` =  jsonlite::fromJSON(cm_obj)$description,`new description` = cm_updated$description)</code></pre>
+<pre><code>    old name                           new name </code></pre>
+<p>“Test Calculated Metric” “new name”</p>
+<pre><code>  old description                       new description </code></pre>
+<p>“Test cm description” “this is a new description”</p>
+<p>For updating an existing calculated metrics within the definition
+there is a more complex solution that needs to be done.</p>
+<pre><code>
+cm_updated &lt;- aw_get_calculatedmetrics(filterByIds = cm_updated$id, 
+                                       expansion = &#39;definition&#39;)
+
+#change the col1 values to reflect a new function `mean`
+cm_updated$definition$formula$col1$func &lt;- &#39;mean&#39;
+cm_updated$definition$formula$col1$description &lt;- &#39;Mean&#39;
+cm_updated$definition$formula$col1$`include-zeros` &lt;- FALSE
+
+cm_update_complete &lt;- cm_update(
+  id = cm_updated$id,
+  updates = jsonlite::unbox(cm_updated),
+  locale = &quot;en_US&quot;,
+  debug = FALSE,
+  company_id = company_id
+)</code></pre>
+<p><code>cm_update_complete$definition$formula$col1$func</code> [1]
+“mean”</p>
+<p><code>cm_update_complete$definition$formula$col1$description</code>
+[1] “Mean”</p>
+</div>
+<div id="copy-a-calculated-metric" class="section level3">
+<h3>Copy a Calculated Metric</h3>
+<pre><code>cm_var &lt;- aw_get_calculatedmetrics(filterByIds = jsonlite::fromJSON(cm_obj)$id, 
+                                   expansion = &#39;definition&#39;)
+
+jsonlite::toJSON(cm_var)
+
+copy_res &lt;- cm_copy(cm_id = cm_var$id, 
+                    name = &#39;Here I copy the cm&#39;, 
+                    description = &#39;I want to add a new description&#39;, 
+                    polarity = &#39;negative&#39;, 
+                    precision = 2, 
+                    type = &#39;percent&#39;,
+                    create_cm = T)
+</code></pre>
+<p><code>copy_res</code>
+“{”rsid”:“igeo1xxpnwcidadobepm”,“id”:“cm300010142_6537f722de0e706af6156fb3”,“name”:“Here
+I copy the cm”,“description”:“I want to add a new
+description”,“isDeleted”:false,“migratedIds”:[],“internal”:false,“owner”:{“id”:200654087},“hidden”:false,“componentType”:“calculatedMetric”,“polarity”:“negative”,“precision”:2,“type”:“percent”,“definition”:{“formula”:{“func”:“divide”,“col1”:{“func”:“mean”,“description”:“Mean”,“col”:{“func”:“metric”,“name”:“metrics/visits”,“description”:“Visits”},“include-zeros”:false},“col2”:{“func”:“metric”,“name”:“metrics/singlepagevisits”,“description”:“Single
+Page
+Visits”}},“func”:“calc-metric”,“version”:[1,0,0]},“compatibility”:{“identityMetrics”:[{“identity”:“metrics/visits”},{“identity”:“metrics/singlepagevisits”}],“functions”:[“mean”,“divide”],“validator_version”:“1.0.0”,“supported_products”:[“oberon”],“supported_schema”:[“schema_oberon”,“schema_frag”]},“legacyId”:““,”categories”:[“Calculated
+Metrics”],“modified”:“2023-10-24T16:56:02Z”}”</p>
+<p><code>cm_val(copy_res)</code> [1] “The calculated metric definition
+IS VALID”</p>
+</div>
+<div id="delete-calculated-metrics" class="section level3">
+<h3>Delete calculated metrics</h3>
+<pre><code>?cm_delete
+
+deleted &lt;- cm_delete(
+  cm_id = cm_no_seg_filter,
+  warn = FALSE,
+  locale = &quot;en_US&quot;,
+  debug = FALSE,
+  rsid = rsid,
+  company_id = company_id
+)</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>The set of calculated metric functions are setup to enable the end
+user to easily incorporate calculated metrics into the analysis and data
+science workflows without needing to interact with the UI. At the same
+time, the application of integrating the API in workflows enables a
+broader set of analytics users to incorporate the results and ongoing
+analysis in the powerful and versatile Analysis Workspace. Make sure to
+add an issue in Github or add a pull request if you find additional
+opportunities of development that would enhance the ability to analyze
+and communicate the results using calculated metrics in your
+workflows.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
