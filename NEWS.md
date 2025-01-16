@@ -1,3 +1,8 @@
+# adobeanalyticsr 0.5.0
+
+* added OAuth Server-to-Server (S2S) authentication support
+* minor changes to the documentation
+
 # adobeanalyticsr 0.4.0
 
 * added calculated metrics management functions
@@ -22,7 +27,7 @@
   - aw_call_api now handles `Content-type` in the head of the api call
 * Bug fix 
   - aw_get_calculatedmetrics function now recognizes filters due to an `includeType` argument bug fix
-  - issue 49 regarding ownerId filter not being recognized was fixed
+  - issue #49 regarding ownerId filter not being recognized was fixed
   - fixed issue #142 related to building sequential segments
 * Enhancement
   - added 'internal' argument for calc metrics and segments that can be used to prevent
